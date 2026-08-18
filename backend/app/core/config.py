@@ -1,10 +1,8 @@
 import os
-from pathlib import Path
 from pydantic_settings import BaseSettings
 
-# Absolute path to root database file
-ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
-DEFAULT_DB_PATH = f"sqlite:///{ROOT_DIR / 'careersync.db'}"
+# Use relative path so it works on both local Windows and Render Linux
+DEFAULT_DB_PATH = "sqlite:///./careersync.db"
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "CareerSync"
