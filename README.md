@@ -1,144 +1,189 @@
-# CareerSync: AI Resume-to-Job Matching Platform
+# CareerSync 🤖
 
-CareerSync is a full-stack AI-powered resume analyzer and job matching dashboard. It parses PDF, Word, and text resumes into structured JSON profiles, compares them against target job descriptions, identifies skill gaps, calculates fit scores, and generates actionable resume formatting/improvement recommendations.
+<div align="center">
 
-The platform provides a distinctive **"document review desk"** aesthetic: a clean white glassmorphic theme with distinct candidate and recruiter workspace windows, a serif display typeface for headers, monospace indicators for scores/data, and sans-serif for body.
+![CareerSync Banner](https://img.shields.io/badge/CareerSync-AI%20Resume%20Matcher-6366F1?style=for-the-badge&logo=robot&logoColor=white)
+
+[![Next.js](https://img.shields.io/badge/Next.js%2015-000000?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Gemini AI](https://img.shields.io/badge/Google%20Gemini-4285F4?style=flat-square&logo=google&logoColor=white)](https://ai.google.dev/)
+
+> **An AI-powered full-stack platform that parses resumes, matches them to job descriptions, calculates fit scores, and generates actionable improvement recommendations.**
+
+</div>
 
 ---
 
-## Technical Stack
-* **Frontend**: Next.js 15 (App Router) + React + TypeScript + Tailwind CSS v4
-* **Backend**: Python 3 + FastAPI
-* **Database**: PostgreSQL (SQLAlchemy ORM) with a transparent SQLite fallback for local development
-* **AI Engine**: Google Gemini API (`gemini-1.5-flash` or `gemini-1.5-pro`)
-* **Parsers**: `pdfplumber` (PDF text extraction) and `python-docx` (Microsoft Word extraction)
+## ✨ Features
+
+- 📄 **Resume Parsing** — Supports PDF, Word (.docx), and plain text formats
+- 🤖 **AI Matching Engine** — Uses Google Gemini to compare resumes against job descriptions
+- 📊 **Fit Score Calculation** — Dynamic scoring with skill-gap analysis
+- 💡 **Actionable Recommendations** — AI-generated resume improvement tips
+- 🔐 **JWT Authentication** — Secure candidate and recruiter portals
+- 🎨 **Glassmorphic UI** — Clean "document review desk" aesthetic with Next.js & Tailwind CSS v4
+- 🐳 **Docker Support** — Full multi-container orchestration via Docker Compose
+- 🗄️ **PostgreSQL + SQLite Fallback** — Production-ready DB with easy local dev
 
 ---
 
-## Project Structure
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | Next.js 15 (App Router), React, TypeScript, Tailwind CSS v4 |
+| **Backend** | Python 3, FastAPI, SQLAlchemy ORM |
+| **Database** | PostgreSQL (prod) / SQLite (local dev) |
+| **AI Engine** | Google Gemini API (`gemini-1.5-flash` / `gemini-1.5-pro`) |
+| **Parsers** | `pdfplumber` (PDF), `python-docx` (Word) |
+| **Auth** | JWT (JSON Web Tokens) |
+| **DevOps** | Docker, Docker Compose |
+
+---
+
+## 📁 Project Structure
+
 ```
 careersync/
 ├── backend/                  # FastAPI Application
 │   ├── app/
-│   │   ├── core/             # DB settings, security, JWT helper, configs
-│   │   ├── models/           # SQLAlchemy DB Tables
-│   │   ├── schemas/          # Pydantic schemas (validation)
+│   │   ├── core/             # DB settings, security, JWT, configs
+│   │   ├── models/           # SQLAlchemy DB tables
+│   │   ├── schemas/          # Pydantic validation schemas
 │   │   ├── routers/          # Auth, Resumes, Jobs, Matching endpoints
-│   │   ├── services/         # Document parsers & Google Gemini API integrations
+│   │   ├── services/         # Document parsers & Gemini AI integrations
 │   │   └── main.py           # FastAPI entry point
 │   ├── Dockerfile
-│   └── requirements.txt      # Python dependencies
+│   └── requirements.txt
 ├── frontend/                 # Next.js Application
 │   ├── src/
-│   │   ├── app/              # Portal pages: Home, Login, Signup, Candidate, Recruiter
-│   │   ├── components/       # UI Elements (GlassCard)
-│   │   ├── context/          # JWT auth state manager & API fetch wrapper
+│   │   ├── app/              # Pages: Home, Login, Signup, Candidate, Recruiter
+│   │   ├── components/       # UI elements (GlassCard, etc.)
+│   │   ├── context/          # JWT auth state & API fetch wrapper
 │   │   └── types/            # TypeScript interfaces
 │   ├── Dockerfile
-│   └── package.json          # Node dependencies
+│   └── package.json
 ├── docker-compose.yml        # Multi-container orchestration
-├── .env.example              # Variables template
+├── .env.example              # Environment variables template
 ├── seed_data.py              # Mock data database seeder
 └── verify_api.py             # Built-in API verification script
 ```
 
 ---
 
-## Configuration (`.env`)
+## ⚙️ Setup & Installation
 
-Create a `.env` file at the root of the project (copy from `.env.example`):
-```env
-# Database connection string (PostgreSQL)
-# Note: If database is left blank or cannot connect, the backend automatically 
-# falls back to creating and using a local SQLite file (careersync.db) at the root!
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/careersync
+### Prerequisites
+- Node.js 18+
+- Python 3.10+
+- PostgreSQL (or use SQLite for local dev)
+- Docker & Docker Compose (optional)
+- Google Gemini API key
 
-# Secret key used for JWT signing and verification
-JWT_SECRET=super-secret-key-change-in-production-123456
+### Option 1 — Quick Start (Windows)
 
-# Google Gemini API Key
-# Note: If no API key is specified, the matching engine uses mock analysis patterns 
-# so you can fully explore the dashboard and candidate portal features immediately.
-GEMINI_API_KEY=AIzaSy...
+```bash
+# Clone the repo
+git clone https://github.com/om-jena27/careersync.git
+cd careersync
 
-# Public API URL that frontend contacts
-NEXT_PUBLIC_API_URL=http://localhost:8000
+# Copy env file and fill in your keys
+cp .env.example .env
+
+# Run everything with one command
+start.bat
+```
+
+### Option 2 — Docker Compose
+
+```bash
+git clone https://github.com/om-jena27/careersync.git
+cd careersync
+cp .env.example .env
+# Edit .env with your credentials
+docker-compose up --build
+```
+
+### Option 3 — Manual Setup
+
+```bash
+# Backend
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+
+# Frontend (new terminal)
+cd frontend
+npm install
+npm run dev
 ```
 
 ---
 
-## Execution Methods
+## 🔐 Configuration (`.env`)
 
-### Option 1: Docker Compose (Fully Automated)
-If you have Docker and Docker Compose installed:
-1. Define your environment variables in `.env` (make sure to set `GEMINI_API_KEY`).
-2. Build and start the containers from the root directory:
-   ```bash
-   docker-compose up --build
-   ```
-3. The platform will be live at:
-   - **Frontend**: http://localhost:3000
-   - **Backend API**: http://localhost:8000
-   - **Swagger Docs**: http://localhost:8000/docs
+Copy `.env.example` to `.env` and fill in:
 
-### Option 2: Local Manual Running (Developer Dev)
+```env
+# Database
+DATABASE_URL=postgresql://user:password@localhost:5432/careersync
 
-#### Step A: Run the Backend
-1. Open a terminal in the `backend` folder:
-   ```bash
-   cd backend
-   ```
-2. Create and activate a Python virtual environment:
-   - **Windows (PowerShell)**:
-     ```powershell
-     python -m venv venv
-     venv\Scripts\Activate.ps1
-     ```
-   - **macOS/Linux**:
-     ```bash
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Start the FastAPI server:
-   ```bash
-   uvicorn app.main:app --reload --port 8000
-   ```
+# JWT Secret
+SECRET_KEY=your-super-secret-key
 
-#### Step B: Populate Mock Seed Data
-While the backend server is running in a virtual environment, populate it with mock data immediately:
+# Google Gemini API
+GEMINI_API_KEY=your-gemini-api-key
+
+# Frontend URL (for CORS)
+FRONTEND_URL=http://localhost:3000
+```
+
+---
+
+## 🚀 Usage
+
+| Portal | URL | Description |
+|---|---|---|
+| Frontend App | `http://localhost:3000` | Main web interface |
+| API Docs | `http://localhost:8000/docs` | Swagger UI |
+| API Redoc | `http://localhost:8000/redoc` | ReDoc interface |
+
+1. **Sign up** as a Candidate or Recruiter
+2. **Upload your resume** (PDF/Word/Text)
+3. **Paste a job description**
+4. Get your **AI-powered fit score + recommendations** instantly
+
+---
+
+## 🧪 Testing
+
 ```bash
-# Navigate back to root and run the seed script
+# Verify API endpoints
+python verify_api.py
+
+# Test Groq model integration
+python test_groq_match.py
+
+# Test email feature
+python test_email_feature.py
+
+# Seed mock data
 python seed_data.py
 ```
-This inserts two default test accounts:
-* **Candidate Account**: `candidate@example.com` / `password123`
-* **Recruiter Account**: `recruiter@example.com` / `password123`
-* Prepopulated with default jobs, candidate resume uploads, and parsed reports!
-
-#### Step C: Run the Frontend
-1. Open a separate terminal in the `frontend` folder:
-   ```bash
-   cd frontend
-   ```
-2. Install npm packages:
-   ```bash
-   npm install
-   ```
-3. Start the Next.js development server:
-   ```bash
-   npm run dev
-   ```
-4. Access the dashboard: http://localhost:3000
 
 ---
 
-## Portals & Features
+## 👨‍💻 Author
 
-1. **Sign-up / Log-in Dashboard**: Choose role as either `candidate` or `recruiter`. Role-based routes are protected and redirect users automatically.
-2. **Candidate Desk**: Parse PDF/DOCX resumes, paste target positions, trigger matching reviews, inspect recommendations and compliance issues, and view historical archive sheets.
-3. **Recruiter Desk**: Add job definitions, bulk-upload multiple resumes, sort a score-ranked list of candidates, filter by thresholds, and export shortlists to `.csv`.
-4. **API Verification**: Running `python verify_api.py` while the backend is running tests all main endpoints programmatically.
+**Om Prakash Jena** — B.Tech CSE (AI & ML), Centurion University
+
+[![GitHub](https://img.shields.io/badge/GitHub-om--jena27-181717?style=flat-square&logo=github)](https://github.com/om-jena27)
+
+---
+
+## 📄 License
+
+This project is open-source. Feel free to explore and learn from it!
