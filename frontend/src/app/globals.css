@@ -7,27 +7,70 @@
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #0f0919;
+  --foreground: #f3e8ff;
+  --card-bg: rgba(26, 16, 47, 0.75);
+  --card-border: rgba(139, 92, 246, 0.25);
+  --primary: #8b5cf6;
+  --secondary: #ec4899;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar for Violet Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0919;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(236, 72, 153, 0.5);
 }
 
 /* Glassmorphism utility classes */
 .glass-effect {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(26, 16, 47, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(15, 9, 25, 0.8), 0 0 15px 0 rgba(139, 92, 246, 0.08);
 }
 
 .glass-effect-dark {
-  background: rgba(15, 23, 42, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(15, 9, 25, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.glass-effect-rose {
+  background: rgba(236, 72, 153, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+}
+
+.violet-glow {
+  box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.35);
+}
+
+.rose-glow {
+  box-shadow: 0 0 25px -5px rgba(236, 72, 153, 0.35);
+}
+
+.gradient-text-violet {
+  background: linear-gradient(135deg, #c084fc 0%, #f472b6 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

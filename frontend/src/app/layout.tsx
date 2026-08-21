@@ -33,7 +33,7 @@ export default function RootLayout({
       lang="en"
       className={`${sans.variable} ${serif.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans">
+      <body className="min-h-full flex flex-col bg-[#0f0919] text-purple-50 selection:bg-pink-500 selection:text-white font-sans">
         <AuthProvider>
           {children}
         </AuthProvider>
